@@ -17,6 +17,10 @@ options = {
     autoload_local_danmaku = false,
     autoload_for_url = false,
     save_danmaku = false,
+    -- 指定弹幕保存目录。为空时保存到视频同目录；目录需要用户提前创建
+    save_danmaku_path = "",
+    -- 指定 save_danmaku_path 的应用范围：local / url / all
+    save_danmaku_path_mode = "local",
     user_agent = "mpv_danmaku/1.0",
     proxy = "",
     -- 可选：向 HTTP 请求传递 cookie.txt 文件路径

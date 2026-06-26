@@ -333,7 +333,7 @@ key script-message danmaku-delay <seconds> ${=time-pos}
 
 > #### 保存当前视频弹幕（可选）
 
-在视频播放时手动保存弹幕至视频所在文件夹，保存格式为 `xml`（注：此功能将保存为视频同名弹幕，若视频文件夹下存在同名文件将不会执行该功能）
+在视频播放时手动保存弹幕，保存格式为 `xml`（注：此功能将保存为视频同名弹幕，若目标文件夹下存在同名文件将不会执行该功能）。默认保存至视频所在文件夹，也可以通过 `save_danmaku_path` 和 `save_danmaku_path_mode` 保存到指定文件夹。
 
 想要通过快捷键使用此功能，请添加类似下面的配置到 `input.conf`中。从源添加弹幕功能对应的脚本消息为 `immediately_save_danmaku`。
 
@@ -504,7 +504,7 @@ save_danmaku
 
 #### 功能说明
 
-当文件关闭时自动保存弹幕文件（xml格式）至视频同目录，保存的弹幕文件名与对应的视频文件名相同。配合[autoload_local_danmaku选项](#autoload_local_danmaku)可以实现弹幕自动保存到本地并且下次播放时自动加载本地保存的弹幕。此功能默认禁用。
+当文件关闭时自动保存弹幕文件（xml格式），保存的弹幕文件名与对应的视频文件名相同。默认保存至视频同目录，配合[autoload_local_danmaku选项](#autoload_local_danmaku)可以实现弹幕自动保存到本地并且下次播放时自动加载本地保存的弹幕。此功能默认禁用。
 
 > **⚠️NOTE！**
 > 
@@ -522,6 +522,32 @@ save_danmaku
 
 ```
 save_danmaku=yes
+```
+
+如需保存到指定文件夹，请提前创建目标文件夹，然后配置 `save_danmaku_path` 和 `save_danmaku_path_mode`。插件不会自动创建目录。
+
+保存本地媒体到指定文件夹时，文件名会包含视频父目录名，用于减少不同目录下同名视频的弹幕文件冲突。例如 `动画/01.mkv` 会保存为类似 `动画_01.xml`。网络媒体保存到指定文件夹时仍使用媒体标题作为文件名。
+
+`save_danmaku_path_mode` 可选值如下：
+
+- `local`：默认值，仅本地媒体保存到 `save_danmaku_path`，网络媒体仍不保存
+- `url`：仅网络媒体保存到 `save_danmaku_path`，本地媒体仍保存到视频同目录
+- `all`：本地媒体和网络媒体都保存到 `save_danmaku_path`
+
+例如，仅将网络媒体的弹幕保存到 `~~/danmaku`：
+
+```
+save_danmaku=yes
+save_danmaku_path=~~/danmaku
+save_danmaku_path_mode=url
+```
+
+例如，将所有媒体的弹幕都保存到 `~~/danmaku`：
+
+```
+save_danmaku=yes
+save_danmaku_path=~~/danmaku
+save_danmaku_path_mode=all
 ```
 
 </details>
